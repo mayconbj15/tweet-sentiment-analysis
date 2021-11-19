@@ -39,7 +39,7 @@ def LoadJson(filePath):
 if __name__ == "__main__":
     texts = []
 
-    data = LoadJson('data.json')
+    data = LoadJson('files\\data.json')
 
     for i in data['data']:
         texts.append(i['text'])
