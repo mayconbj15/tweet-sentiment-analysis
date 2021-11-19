@@ -1,0 +1,67 @@
+MLPClassifier
+hidden_layer_sizes = (3,),
+learning_rate_init = 0.4,
+momentum = 0.3
+
+Time(miliseconds):  511049.54075813293
+Matrix de confusão das classes 1 0 2
+ [[15823 16989   521]
+ [13095 18201  2038]
+ [5944  8466 18923]]
+
+              precision    recall  f1-score   support
+
+           1       0.45      0.47      0.46     33333
+           0       0.42      0.55      0.47     33334
+           2       0.88      0.57      0.69     33333
+
+    accuracy                           0.53    100000
+   macro avg       0.58      0.53      0.54    100000
+weighted avg       0.58      0.53      0.54    100000
+
+Acurácia do modelo: 0.52947
+
+hidden_layer_sizes=(3,),
+learning_rate_init=0.4,
+momentum=0.3,
+max_iter=500
+
+Time (miliseconds):  545774.870634079
+Matrix de confusão das classes 1 0 2
+ [[13643 19285   405]
+ [11050 20874  1410]
+ [ 4562 11227 17544]]
+
+              precision    recall  f1-score   support
+
+           1       0.47      0.41      0.44     33333
+           0       0.41      0.63      0.49     33334
+           2       0.91      0.53      0.67     33333
+
+    accuracy                           0.52    100000
+   macro avg       0.59      0.52      0.53    100000
+weighted avg       0.59      0.52      0.53    100000
+
+Acurácia do modelo: 0.52061
+
+hidden_layer_sizes=(3,),
+learning_rate_init=0.2,
+momentum=0.3
+
+Time (miliseconds):  574706.4027786255
+Matrix de confusão das classes 1 0 2
+ [[23788  8856   689]
+ [ 7738 23370  2226]
+ [ 1277  4776 27280]]
+
+              precision    recall  f1-score   support
+
+           1       0.73      0.71      0.72     33333
+           0       0.63      0.70      0.66     33334
+           2       0.90      0.82      0.86     33333
+
+    accuracy                           0.74    100000
+   macro avg       0.75      0.74      0.75    100000
+weighted avg       0.75      0.74      0.75    100000
+
+Acurácia do modelo: 0.74438

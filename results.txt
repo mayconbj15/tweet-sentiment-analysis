@@ -1,0 +1,62 @@
+3 Classes
+
+Config:
+learning_rate_init=0.05,
+learning_rate='adaptive',
+activation='logistic',
+hidden_layer_sizes=3
+
+Neural3Classes2
+Time (miliseconds):  3010193.26376915
+Matrix de confusão das classes 1 0 2 
+ [[24829  7303  1201]
+ [ 9421 20494  3419]
+ [ 1860  3544 27929]]
+
+              precision    recall  f1-score   support
+
+           1       0.69      0.74      0.72     33333
+           0       0.65      0.61      0.63     33334
+           2       0.86      0.84      0.85     33333
+
+    accuracy                           0.73    100000
+   macro avg       0.73      0.73      0.73    100000
+weighted avg       0.73      0.73      0.73    100000
+
+Acurácia do modelo: 0.73252
+
+NaiveBayes3Classes2
+ [[25046  7391   896]
+ [ 7703 23278  2353]
+ [  827  3595 28911]]
+
+              precision    recall  f1-score   support
+
+           1       0.75      0.75      0.75     33333
+           0       0.68      0.70      0.69     33334
+           2       0.90      0.87      0.88     33333
+
+    accuracy                           0.77    100000
+   macro avg       0.77      0.77      0.77    100000
+weighted avg       0.77      0.77      0.77    100000
+
+Acurácia do modelo: 0.77235
+
+SVM
+Time (miliseconds):  283397.6535797119
+Matrix de confusão das classes 1 0 2 
+ [[25256  7177   900]
+ [ 9083 21481  2770]
+ [ 1797  3741 27795]]
+
+              precision    recall  f1-score   support
+
+           1       0.70      0.76      0.73     33333
+           0       0.66      0.64      0.65     33334
+           2       0.88      0.83      0.86     33333
+
+    accuracy                           0.75    100000
+   macro avg       0.75      0.75      0.75    100000
+weighted avg       0.75      0.75      0.75    100000
+
+Acurácia do modelo: 0.74532
