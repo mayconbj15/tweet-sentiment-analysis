@@ -19,7 +19,7 @@ def PreProcessingList(tweetList):
 
 
 def PreProcessing(tweet, trend=''):
-    tweet = RemoveStopWords(tweet, stop_words).lower()
+    tweet = RemoveStopWords(tweet, stop_words)
     tweet = CleanAttribute(tweet, trend)
     #tweet = Stemming(tweet)
 
@@ -28,8 +28,7 @@ def PreProcessing(tweet, trend=''):
 
 
 def CleanAttribute(attribute, trend):
-    attribute = re.sub(r"http\S+", "", attribute).lower().replace('.',
-                                                                  '').replace(';', '').replace('-', '').replace(':', '').replace(')', '')
+    attribute = re.sub(r"http\S+", "", attribute)
     attribute = re.sub(r'[.,"\'-?:!;]', '', attribute)
     attribute = attribute.strip()
 
@@ -57,6 +56,9 @@ def Stemming(instancia):
 def GetVectorizer():
     tweet_tokenizer = TweetTokenizer()
     vectorizer = CountVectorizer(
-        analyzer="word", tokenizer=tweet_tokenizer.tokenize, ngram_range=(1, 2))
+        analyzer="word",
+        tokenizer=tweet_tokenizer.tokenize,
+        ngram_range=(1, 2)
+    )
 
     return vectorizer

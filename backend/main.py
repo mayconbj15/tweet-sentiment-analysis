@@ -1,5 +1,6 @@
 import pandas as pd
 from scipy.sparse import data
+from sklearn.naive_bayes import MultinomialNB
 
 import fileprocessing
 import machinelearning
@@ -25,17 +26,6 @@ def GetData(file_name, separator=','):
     return df
 
 
-def CoronaDataFrame():
-    dataFrame = GetData(constants.CORONA_NLP_FULL_FILE_PATH)[CoronaAttributes]
-    fileprocessing.PrintMetrics(dataFrame, CoronaSentimentFieldName)
-    dataFrame = fileprocessing.ProcessBase(
-        dataFrame, CoronaSentimentFieldName, CoronaSentimentList)
-    dataFrame[CoronaAttributes[0]] = preprocessing.PreProcessingList(
-        dataFrame[CoronaAttributes[0]])
-
-    return dataFrame
-
-
 def KaggleDataFrame(file_path):
     dataFrame = GetData(file_path, separator=';')[KaggleAttributes]
     fileprocessing.PrintMetrics(dataFrame, KaggleSentimentFieldName)
@@ -44,21 +34,13 @@ def KaggleDataFrame(file_path):
     return dataFrame
 
 
-def CoronaPredict(dataFrame, model):
-    original_text, sentiment = fileprocessing.PredictVectors(
-        dataFrame, CoronaAttributes)
-
-    machinelearning.CrossValidation(model, original_text,
-                                    sentiment, CoronaSentimentList)
-
-
 def KaggleCrossValidation(dataFrame, model):
     original_text, sentiments = fileprocessing.PredictVectors(
         dataFrame, KaggleAttributes)
 
     sentiments_list = utils.GetSentimentList(dataFrame, 'sentiment')
 
-    machinelearning.CrossValidation(
+    machinelearning.PipelineCrossValidation(
         model, original_text, sentiments, sentiments_list)
 
 
@@ -96,3 +78,4 @@ if __name__ == "__main__":
         dataFrame[KaggleAttributes[0]])
 
     NaiveBayesClassification(dataFrame)
+    #KaggleCrossValidation(dataFrame, model)

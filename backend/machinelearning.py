@@ -28,6 +28,13 @@ import constants
 trained = False
 
 
+def NaiveBayesPipeline():
+    return Pipeline([
+        ('counts', preprocessing.GetVectorizer()),
+        ('classifier', MultinomialNB())
+    ])
+
+
 def NaiveBayesClassifier():
     return MultinomialNB()
 
@@ -69,21 +76,21 @@ def LoadModel(filePath):
     return model
 
 
-def CrossValidation(model, tweets, classes, sentiments_list):
+def PipelineCrossValidation(pipeline, tweets, classes, sentiments_list):
     start_time = time.time()
 
     print('TRAINING')
-    model.fit(tweets, classes)
+    pipeline.fit(tweets, classes)
 
     print('PREDICTING')
-    result = cross_val_predict(model, tweets, classes, cv=10)
+    result = cross_val_predict(pipeline, tweets, classes, cv=10)
 
     end_time = time.time()
     print('Time (miliseconds): ', (end_time - start_time)*1000)
 
     PrintResult(classes, result, sentiments_list)
 
-    SaveModel(model, constants.MODEL_BASE_PATH + 'MLPClassifierTest.sav')
+    SaveModel(pipeline, constants.MODEL_BASE_PATH + 'MLPClassifierTest.sav')
 
 # Return a list of predicted values
 
@@ -101,27 +108,6 @@ def NaiveBayesCrossValidation(model, freq_tweets, classes):
     print('Time (miliseconds): ', (end_time - start_time)*1000)
 
     return result
-
-
-def CrossValidation2(model, dataFrame):
-    X = dataFrame.iloc[:, :-1]
-    y = dataFrame.iloc[:, -1]
-
-    k = 5
-    kf = KFold(n_splits=k, random_state=None)
-
-    actual = []
-
-    for train_index, test_index in kf.split(X):
-        X_train, X_test = X.iloc[train_index, :], X.iloc[test_index, :]
-        y_train, y_test = y[train_index], y[test_index]
-
-        #model.fit(X_train, y_train)
-        pred_values = model.predict(X_test)
-
-        #acc = accuracy_score(pred_values , y_test)
-        # acc_score.append(acc)
-        actual.append(pred_values)
 
 
 def PredictExpected(model, actual, expected, sentiments_list):
