@@ -41,7 +41,7 @@ def NaiveBayesClassifier():
 
 def SVMClassifier():
     return Pipeline([
-        ('counts', CountVectorizer(ngram_range=(1, 3))),
+        ('counts', preprocessing.GetVectorizer()),
         ('classifier', svm.SVC())
     ])
 
@@ -79,9 +79,6 @@ def LoadModel(filePath):
 def PipelineCrossValidation(pipeline, tweets, classes, sentiments_list):
     start_time = time.time()
 
-    print('TRAINING')
-    pipeline.fit(tweets, classes)
-
     print('PREDICTING')
     result = cross_val_predict(pipeline, tweets, classes, cv=10)
 
@@ -98,10 +95,7 @@ def PipelineCrossValidation(pipeline, tweets, classes, sentiments_list):
 def NaiveBayesCrossValidation(model, freq_tweets, classes):
     start_time = time.time()
 
-    print('TRAINING')
-    model.fit(freq_tweets, classes)
-
-    print('PREDICTING')
+    print('CROSS VAL PREDICTING')
     result = cross_val_predict(model, freq_tweets, classes, cv=10)
 
     end_time = time.time()

@@ -9,11 +9,6 @@ import lexicon
 import utils
 import constants
 
-CoronaSentimentList = ['Positive', 'Negative']
-CoronaAttributes = ["OriginalTweet", "Sentiment"]
-CoronaSentimentFieldName = 'Sentiment'
-
-#KaggleSentimentList = ['Positivo', 'Negativo']
 KaggleSentimentList = ['0', '1']
 KaggleAttributes = ['tweet_text', 'sentiment']
 KaggleSentimentFieldName = 'sentiment'
@@ -78,4 +73,5 @@ if __name__ == "__main__":
         dataFrame[KaggleAttributes[0]])
 
     NaiveBayesClassification(dataFrame)
+    #model = machinelearning.SVMClassifier()
     #KaggleCrossValidation(dataFrame, model)
