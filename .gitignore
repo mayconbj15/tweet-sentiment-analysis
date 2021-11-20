@@ -1,6 +1,6 @@
 /files/archive
-/__pycache__
 /frontend/node_modules
 /files/models
 /files/lexicons
 /files/Corona_NLP_full.csv
+/backend/__pycache__

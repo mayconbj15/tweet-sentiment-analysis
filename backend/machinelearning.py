@@ -29,10 +29,7 @@ trained = False
 
 
 def NaiveBayesClassifier():
-    return Pipeline([
-        ('counts', CountVectorizer(ngram_range=(1, 3))),
-        ('classifier', ComplementNB())
-    ])
+    return MultinomialNB()
 
 
 def SVMClassifier():
@@ -76,7 +73,7 @@ def CrossValidation(model, tweets, classes, sentiments_list):
     start_time = time.time()
 
     print('TRAINING')
-    #model.fit(tweets, classes)
+    model.fit(tweets, classes)
 
     print('PREDICTING')
     result = cross_val_predict(model, tweets, classes, cv=10)
@@ -87,6 +84,23 @@ def CrossValidation(model, tweets, classes, sentiments_list):
     PrintResult(classes, result, sentiments_list)
 
     SaveModel(model, constants.MODEL_BASE_PATH + 'MLPClassifierTest.sav')
+
+# Return a list of predicted values
+
+
+def NaiveBayesCrossValidation(model, freq_tweets, classes):
+    start_time = time.time()
+
+    print('TRAINING')
+    model.fit(freq_tweets, classes)
+
+    print('PREDICTING')
+    result = cross_val_predict(model, freq_tweets, classes, cv=10)
+
+    end_time = time.time()
+    print('Time (miliseconds): ', (end_time - start_time)*1000)
+
+    return result
 
 
 def CrossValidation2(model, dataFrame):

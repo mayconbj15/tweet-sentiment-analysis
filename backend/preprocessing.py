@@ -1,5 +1,8 @@
 import nltk
 from nltk.corpus import stopwords
+from nltk.tokenize import TweetTokenizer
+
+from sklearn.feature_extraction.text import CountVectorizer
 
 import re  # regex
 
@@ -25,11 +28,8 @@ def PreProcessing(tweet, trend=''):
 
 
 def CleanAttribute(attribute, trend):
-    attribute = re.sub(r"http\S+", "", attribute)
-    attribute = re.sub(r"#\S+", "", attribute)
-    attribute = re.sub(r"@\S+", "", attribute).lower().replace('.',
-                                                               '').replace(';', '').replace('-', '').replace(':', '').replace(')', '')
-    attribute = attribute.replace("RT", "")
+    attribute = re.sub(r"http\S+", "", attribute).lower().replace('.',
+                                                                  '').replace(';', '').replace('-', '').replace(':', '').replace(')', '')
     attribute = re.sub(r'[.,"\'-?:!;]', '', attribute)
     attribute = attribute.strip()
 
@@ -52,3 +52,11 @@ def Stemming(instancia):
         palavras.append(stemmer.stem(w))
 
     return (" ".join(palavras))
+
+
+def GetVectorizer():
+    tweet_tokenizer = TweetTokenizer()
+    vectorizer = CountVectorizer(
+        analyzer="word", tokenizer=tweet_tokenizer.tokenize, ngram_range=(1, 2))
+
+    return vectorizer

@@ -73,25 +73,26 @@ def KagglePredictLexicon(dataFrame):
         dataFrame, KaggleAttributes[0], KaggleAttributes[1], sentiments_list)
 
 
+def NaiveBayesClassification(dataFrame):
+    model = machinelearning.NaiveBayesClassifier()
+
+    vectorizer = preprocessing.GetVectorizer()
+
+    freq_tweets = vectorizer.fit_transform(dataFrame[KaggleAttributes[0]])
+
+    result = machinelearning.NaiveBayesCrossValidation(
+        model, freq_tweets, dataFrame[KaggleAttributes[1]])
+
+    sentiments_list = utils.GetSentimentList(dataFrame, 'sentiment')
+
+    machinelearning.PrintResult(
+        dataFrame[KaggleAttributes[1]], result, sentiments_list)
+
+
 if __name__ == "__main__":
-    #dataFrame = CoronaDataFrame()
     dataFrame = KaggleDataFrame(constants.KAGGLE_TRAIN_3CLASSES)
 
     dataFrame[KaggleAttributes[0]] = preprocessing.PreProcessingList(
         dataFrame[KaggleAttributes[0]])
 
-    #model = machinelearning.LoadModel(constants.MODEL_BASE_PATH + 'Neural3Classes.sav')
-
-    #machinelearning.CrossValidation2(model, dataFrame)
-    model = machinelearning.NaiveBayesClassifier()
-    # model = machinelearning.TrainModel(
-    #    model, dataFrame[KaggleAttributes[0]], dataFrame[KaggleAttributes[1]])
-
-    #machinelearning.SaveModel(model, constants.MODEL_BASE_PATH + '\\NaiveBayes3ClassesHidden1.sav')
-
-    #test_data = GetData(constants.KAGGLE_TEST, separator=';')[KaggleAttributes]
-
-    KaggleCrossValidation(dataFrame, model)
-    # KagglePredictLexicon(dataFrame)
-
-    print('para')
+    NaiveBayesClassification(dataFrame)
