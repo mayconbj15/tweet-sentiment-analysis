@@ -43,7 +43,7 @@ if machinelearning.trained == False:
     #dataFrame = TrainAndSaveModel(constants.KAGGLE_TRAINING_400_SUFFIX)
     #dataFrame = TrainAndSaveModel(constants.KAGGLE_TRAINING_500_SUFFIX)
     model = machinelearning.LoadModel(
-        constants.MODEL_BASE_PATH + "NaiveBayes3Classes2.sav")
+        constants.MODEL_BASE_PATH + "NaiveBayesFinalModel.sav")
     machinelearning.trained = True
     trained = True
 
@@ -67,16 +67,27 @@ def predict_sentiments():
             {"tweet": tweets[i], "sentiment": int(sentiments[i])})
 
     responseBody["distribution"] = {'positive': 0, 'negative': 0, 'neutral': 0}
+    quantPositive = 0
+    quantNeutral = 0
+    quantNegative = 0
     for i in range(0, len(tweets)):
         if int(sentiments[i]) == 0:
-            responseBody["distribution"]["negative"] += 1
+            quantNegative += 1
         elif int(sentiments[i]) == 1:
-            responseBody["distribution"]["positive"] += 1
+            quantPositive += 1
         else:
-            responseBody["distribution"]["neutral"] += 1
+            quantNeutral += 1
+
+    responseBody["distribution"]["negative"] = quantNegative
+    responseBody["distribution"]["positive"] = quantPositive
+    responseBody["distribution"]["neutral"] = quantNeutral
 
     preProcessingsTweets = preprocessing.PreProcessingList(tweets)
     responseBody["group"] = analysis.GroupWords(preProcessingsTweets)
+
+    r = (0.75*quantPositive + 0.94*quantNeutral + 0.78*quantNegative) / \
+        (quantPositive+quantNeutral+quantNegative)
+    responseBody["globalSentiment"] = r
 
     response = app.response_class(
         response=json.dumps(responseBody),

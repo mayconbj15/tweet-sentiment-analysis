@@ -95,11 +95,15 @@ def PipelineCrossValidation(pipeline, tweets, classes, sentiments_list):
 def NaiveBayesCrossValidation(model, freq_tweets, classes):
     start_time = time.time()
 
+    model.fit(freq_tweets, classes)
+
     print('CROSS VAL PREDICTING')
     result = cross_val_predict(model, freq_tweets, classes, cv=10)
 
     end_time = time.time()
     print('Time (miliseconds): ', (end_time - start_time)*1000)
+
+    SaveModel(model, constants.MODEL_BASE_PATH + 'NaiveBayesFinalModel.sav')
 
     return result
 
@@ -129,7 +133,11 @@ def PredictList(model, tweets, trend=''):
     end_time = time.time()
     print('Time (miliseconds): ', (end_time - start_time)*1000)
 
-    return model.predict(tweets)
+    vectorizer = LoadModel(constants.MODEL_BASE_PATH + 'Vectorizer.sav')
+
+    freq_tweets = vectorizer.transform(tweets)
+
+    return model.predict(freq_tweets)
 
 
 def PrintResult(expected_values, predict_values, sentiments_list):

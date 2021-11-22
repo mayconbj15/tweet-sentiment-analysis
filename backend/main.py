@@ -57,6 +57,8 @@ def NaiveBayesClassification(dataFrame):
 
     freq_tweets = vectorizer.fit_transform(dataFrame[KaggleAttributes[0]])
 
+    machinelearning.SaveModel(
+        vectorizer,  constants.MODEL_BASE_PATH + 'Vectorizer.sav')
     result = machinelearning.NaiveBayesCrossValidation(
         model, freq_tweets, dataFrame[KaggleAttributes[1]])
 

@@ -143,30 +143,17 @@ function GetTweetsSentiments(tweetsOfTrends) {
 
             var tweetsSentiments = {};
             $.ajax(settings).done(function (response) {
-                console.log(response);
-                console.log('response');
                 tweetsSentiments = response;
             });
 
-            var positive = 0;
-            var negative = 0;
-            var neutral = 0;
-            tweetsSentiments["data"].forEach(element => {
-                if (element["sentiment"] == 0) {
-                    negative++;
-                } else if (element["sentiment"] == 1) {
-                    positive++;
-                } else {
-                    neutral++;
-                }
-            });
+            var globalSentiment = tweetsSentiments["globalSentiment"]
 
             //Regra para saber o sentimento do topico
-            if (positive > negative && positive > neutral)
+            if (globalSentiment >= 0.75 && globalSentiment < 0.81) //Positivo
                 tweetsOfTrends[k]["sentiment"] = 1
-            else if (negative > positive && negative > neutral)
+            else if (globalSentiment >= 0.81 && globalSentiment < 0.88) //Negativo
                 tweetsOfTrends[k]["sentiment"] = 0
-            else if (neutral > positive && neutral > negative)
+            else if (globalSentiment >= 0.88) //Neutro
                 tweetsOfTrends[k]["sentiment"] = 2
 
             tweetsSentiments["group"] = SortDictionary(tweetsSentiments["group"])
@@ -218,7 +205,6 @@ function RenderCityTrendTable(city, tweetsOfTrends, id, titleId) {
     </table>`;
 
     trendTable.innerHTML = html;
-    console.log(html);
 }
 
 function GetSentimentLabel(sentimentCode) {
